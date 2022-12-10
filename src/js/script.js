@@ -2,15 +2,29 @@ var menuPage = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     function openMenu(numPage = 1) {
+        function setValsToCards() {
+            imgs = document.querySelectorAll(".card-img-top");
+            cTitles = document.querySelectorAll(".card-title");
+            mPrices = document.querySelectorAll(".meal-price");
+            cTexts = document.querySelectorAll(".card-text");
+            for (let i = 0; i < imgs.length; i++) {
+                imgs[i].src = menuPage.dishes[i].image;
+                cTitles[i].textContent = menuPage.dishes[i].name;
+                mPrices[i].textContent = menuPage.dishes[i].price;
+                cTexts[i].textContent = menuPage.dishes[i].description;
+            }
+        }
         var x = new XMLHttpRequest();
         const linkToDish = "https://food-delivery.kreosoft.ru/api/dish";
         x.open("GET", `${linkToDish}?page=${numPage}`, true);
         x.onload = function () {
             menuPage = JSON.parse(x.responseText);
+            setValsToCards();
             console.log(menuPage.dishes)
             console.log(menuPage.pagination)
         }
         x.send(null);
+
         // задаём значения для innerhtml тутъ
         //setPagHtmlVals(numPage);
         // конецтут
