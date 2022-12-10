@@ -1,10 +1,12 @@
+var menuPage = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
     function openMenu(numPage = 1) {
         var x = new XMLHttpRequest();
         const linkToDish = "https://food-delivery.kreosoft.ru/api/dish";
         x.open("GET", `${linkToDish}?page=${numPage}`, true);
         x.onload = function () {
-            const menuPage = JSON.parse(x.responseText);
+            menuPage = JSON.parse(x.responseText);
             console.log(menuPage.dishes)
             console.log(menuPage.pagination)
         }
@@ -63,40 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 numPage = openMenu(Number(page_buttons[i].textContent));
                 prev = i;
             }
+            if (1 === Number(page_buttons[1].textContent) && 1 === Number(page_buttons[prev].textContent)) {
+                page_buttons[0].classList.add("disabled");
+            } else if (Number(menuPage.pagination.count) === Number(page_buttons[prev].textContent) && Number(menuPage.pagination.count) === Number(page_buttons[3].textContent)) {
+                page_buttons[4].classList.add("disabled");
+            } else {
+                page_buttons[0].classList.remove("disabled");
+                page_buttons[4].classList.remove("disabled");
+            }
         });
     }
-    // page_buttons.forEach(element => {
-    //     element.addEventListener("click", () => {
-    //
-    //         curr.classList.remove("active");
-    //         prev = curr;
-    //         curr = element;
-    //         curr.classList.add("active");
-    //         // случаи:
-    //         // 1 !2! 3 click << (станет !1! 2 3)
-    //         // 1 2 !3! click >> (станет: 2 3 !4!)
-    //         // 3 !4! 5 click >> (станет 3 4 !5!) нужно учесть size
-    //         if ("«" === curr.textContent) {
-    //             numPage--;
-    //             openMenu(numPage);
-    //
-    //         } else if ("»" === curr.textContent) {
-    //             curr.classList.remove("active");
-    //             if (prev.textContent === page_buttons[3].textContent) {
-    //                 page_buttons[1].textContent = String(Number(page_buttons[1].textContent) + 1);
-    //                 page_buttons[2].textContent = String(Number(page_buttons[2].textContent) + 1);
-    //                 page_buttons[3].textContent = String(Number(page_buttons[3].textContent) + 1);
-    //             } else {
-    //
-    //             }
-    //             numPage++;
-    //             openMenu(numPage);
-    //         }
-    //         else {
-    //             numPage = openMenu(Number(curr.textContent));
-    //         }
-    //     });
-    // });
     document.querySelector(".menuLink").addEventListener("click", () => {
         numPage = openMenu();
     });
