@@ -3,7 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     var x = new XMLHttpRequest();
     const linkToDish = "https://food-delivery.kreosoft.ru/api/dish";
-    x.open("GET", `${linkToDish}`, true);
+    var numPage = 2;
+    x.open("GET", `${linkToDish}?page=${numPage}`, true);
     x.onload = function () {
         const page = JSON.parse(x.responseText);
         console.log(page.dishes)
