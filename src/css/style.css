@@ -73,7 +73,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*--------------------*/
-.__h1 {
-  color: salmon;
-  font-size: 80px;
+.navbar {
+  position: fixed;
+  width: 100%;
+}
+
+.main {
+  padding-top: 50px;
+  height: 100vh;
+}
+
+.footer {
+  padding: 20px;
 }
