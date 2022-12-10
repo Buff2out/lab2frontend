@@ -1,6 +1,5 @@
 
 prepros.config
-.idea/workspace.xml
-.idea/vcs.xml
-.idea/modules.xml
 .idea/lab2frontend.iml
+.idea/modules.xml
+.idea/vcs.xml
