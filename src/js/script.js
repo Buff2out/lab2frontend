@@ -11,8 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(menuPage.pagination)
         }
         x.send(null);
+        // задаём значения для innerhtml тутъ
+        //setPagHtmlVals(numPage);
+        // конецтут
+        return numPage;
     }
-    document.querySelector(".menuLink").addEventListener("click", () =>{
-        openMenu();
+
+    let numPage = openMenu();
+    document.querySelector(".menuLink").addEventListener("click", () => {
+        numPage = openMenu();
     });
 });
