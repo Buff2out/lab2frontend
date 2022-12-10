@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     var numPage = 2;
     x.open("GET", `${linkToDish}?page=${numPage}`, true);
     x.onload = function () {
-        const page = JSON.parse(x.responseText);
-        console.log(page.dishes)
-        console.log(page.pagination)
+        const menuPage = JSON.parse(x.responseText);
+        console.log(menuPage.dishes)
+        console.log(menuPage.pagination)
     }
     x.send(null);
 });
