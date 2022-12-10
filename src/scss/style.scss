@@ -3,6 +3,7 @@
 .navbar {
     position: fixed;
     width: 100%;
+    z-index: 1;
 }
 
 .main {
@@ -12,4 +13,16 @@
 
 .footer {
     padding: 20px;
+}
+
+.card-footer {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+        margin-bottom: 0;
+    }
+
 }
