@@ -29,14 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // 1 2 !3! click >> (станет: 2 3 !4!)
             // 3 !4! 5 click >> (станет 3 4 !5!) нужно учесть size
             if ("«" === page_buttons[i].textContent) {
+                page_buttons[i].classList.remove("active");
                 if (prev === 1) {
                     page_buttons[1].textContent = String(Number(page_buttons[1].textContent) - 1);
                     page_buttons[2].textContent = String(Number(page_buttons[2].textContent) - 1);
                     page_buttons[3].textContent = String(Number(page_buttons[3].textContent) - 1);
 
                     page_buttons[prev].classList.add("active");
+                    // prev = prev;
                 } else {
                     page_buttons[prev - 1].classList.add("active");
+                    prev--;
                 }
                 numPage--;
                 openMenu(numPage);
@@ -49,15 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     page_buttons[3].textContent = String(Number(page_buttons[3].textContent) + 1);
 
                     page_buttons[prev].classList.add("active");
+                    // prev = prev;
                 } else {
                     page_buttons[prev + 1].classList.add("active");
+                    prev++;
                 }
                 numPage++;
                 openMenu(numPage);
             } else {
                 numPage = openMenu(Number(page_buttons[i].textContent));
+                prev = i;
             }
-            prev = i;
         });
     }
     // page_buttons.forEach(element => {
