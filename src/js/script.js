@@ -40,6 +40,57 @@ document.addEventListener('DOMContentLoaded', () => {
         // конецтут
         return numPage;
     }
+    function releasePagBtn (page_buttons, i, prev) {
+        page_buttons[prev].classList.remove("active");
+        page_buttons[i].classList.add("active");
+        // случаи:
+        // 1 !2! 3 click << (станет !1! 2 3)
+        // 1 2 !3! click >> (станет: 2 3 !4!)
+        // 3 !4! 5 click >> (станет 3 4 !5!) нужно учесть size
+        if ("«" === page_buttons[i].textContent) {
+            page_buttons[i].classList.remove("active");
+            if (prev === 1) {
+                page_buttons[1].textContent = String(Number(page_buttons[1].textContent) - 1);
+                page_buttons[2].textContent = String(Number(page_buttons[2].textContent) - 1);
+                page_buttons[3].textContent = String(Number(page_buttons[3].textContent) - 1);
+
+                page_buttons[prev].classList.add("active");
+                // prev = prev;
+            } else {
+                page_buttons[prev - 1].classList.add("active");
+                prev--;
+            }
+            numPage--;
+            openMenu(numPage);
+
+        } else if ("»" === page_buttons[i].textContent) {
+            page_buttons[i].classList.remove("active");
+            if (prev === 3) {
+                page_buttons[1].textContent = String(Number(page_buttons[1].textContent) + 1);
+                page_buttons[2].textContent = String(Number(page_buttons[2].textContent) + 1);
+                page_buttons[3].textContent = String(Number(page_buttons[3].textContent) + 1);
+
+                page_buttons[prev].classList.add("active");
+                // prev = prev;
+            } else {
+                page_buttons[prev + 1].classList.add("active");
+                prev++;
+            }
+            numPage++;
+            openMenu(numPage);
+        } else {
+            numPage = openMenu(Number(page_buttons[i].textContent));
+            prev = i;
+        }
+        if (1 === Number(page_buttons[1].textContent) && 1 === Number(page_buttons[prev].textContent)) {
+            page_buttons[0].classList.add("disabled");
+        } else if (Number(menuPage.pagination.count) === Number(page_buttons[prev].textContent) && Number(menuPage.pagination.count) === Number(page_buttons[3].textContent)) {
+            page_buttons[4].classList.add("disabled");
+        } else {
+            page_buttons[0].classList.remove("disabled");
+            page_buttons[4].classList.remove("disabled");
+        }
+    }
     var GETObj = parseGetParams();
     if (GETObj.page != null) {
         let numPage = openMenu(Number(GETObj.page));
@@ -52,56 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < page_buttons.length; i++) {
 
         page_buttons[i].addEventListener("click", () => {
-
-            page_buttons[prev].classList.remove("active");
-            page_buttons[i].classList.add("active");
-            // случаи:
-            // 1 !2! 3 click << (станет !1! 2 3)
-            // 1 2 !3! click >> (станет: 2 3 !4!)
-            // 3 !4! 5 click >> (станет 3 4 !5!) нужно учесть size
-            if ("«" === page_buttons[i].textContent) {
-                page_buttons[i].classList.remove("active");
-                if (prev === 1) {
-                    page_buttons[1].textContent = String(Number(page_buttons[1].textContent) - 1);
-                    page_buttons[2].textContent = String(Number(page_buttons[2].textContent) - 1);
-                    page_buttons[3].textContent = String(Number(page_buttons[3].textContent) - 1);
-
-                    page_buttons[prev].classList.add("active");
-                    // prev = prev;
-                } else {
-                    page_buttons[prev - 1].classList.add("active");
-                    prev--;
-                }
-                numPage--;
-                openMenu(numPage);
-
-            } else if ("»" === page_buttons[i].textContent) {
-                page_buttons[i].classList.remove("active");
-                if (prev === 3) {
-                    page_buttons[1].textContent = String(Number(page_buttons[1].textContent) + 1);
-                    page_buttons[2].textContent = String(Number(page_buttons[2].textContent) + 1);
-                    page_buttons[3].textContent = String(Number(page_buttons[3].textContent) + 1);
-
-                    page_buttons[prev].classList.add("active");
-                    // prev = prev;
-                } else {
-                    page_buttons[prev + 1].classList.add("active");
-                    prev++;
-                }
-                numPage++;
-                openMenu(numPage);
-            } else {
-                numPage = openMenu(Number(page_buttons[i].textContent));
-                prev = i;
-            }
-            if (1 === Number(page_buttons[1].textContent) && 1 === Number(page_buttons[prev].textContent)) {
-                page_buttons[0].classList.add("disabled");
-            } else if (Number(menuPage.pagination.count) === Number(page_buttons[prev].textContent) && Number(menuPage.pagination.count) === Number(page_buttons[3].textContent)) {
-                page_buttons[4].classList.add("disabled");
-            } else {
-                page_buttons[0].classList.remove("disabled");
-                page_buttons[4].classList.remove("disabled");
-            }
+            releasePagBtn(page_buttons, i, prev);
         });
     }
     document.querySelector(".menuLink").addEventListener("click", () => {
