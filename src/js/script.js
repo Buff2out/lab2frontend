@@ -92,14 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return paginObj;
     }
-    var GETParamsObj = parseGetParams();
-    var numPage = 1
-    if (GETParamsObj.page != null) {
-        numPage = openMenu(Number(GETParamsObj.page));
-    } else {
+    let GETParamsObj = parseGetParams();
+    let numPage = 0
+    if (GETParamsObj.page == null) {
         numPage = openMenu();
+    } else {
+        numPage = openMenu(Number(GETParamsObj.page));
     }
-    var paginObj = {
+    let paginObj = {
         page_buttons: document.querySelectorAll(".page-link"),
         prev: 1,
         numPage: numPage
