@@ -1,18 +1,19 @@
 @import "init.scss";
 
+dl, ol, ul {
+    margin-bottom: 0;
+}
+
 .navbar {
     position: fixed;
     width: 100%;
     z-index: 1;
 }
 
-.main {
-    padding-top: 50px;
-    height: 100vh;
-}
+.main-container {
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, .15);
+    padding-top: 55px;
 
-.footer {
-    padding: 20px;
 }
 
 .card-footer {
@@ -25,4 +26,12 @@
         margin-bottom: 0;
     }
 
+}
+
+.page-link {
+    padding: 12px 12px;
+}
+
+.footer {
+    padding: 20px;
 }
