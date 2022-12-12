@@ -1,7 +1,17 @@
+function parseGetParams() {
+    var $_GET = {};
+    var __GET = window.location.search.substring(1).split("&");
+    for(var i=0; i<__GET.length; i++) {
+        var getVar = __GET[i].split("=");
+        $_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1];
+    }
+    return $_GET;
+}
 var menuPage = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     function openMenu(numPage = 1) {
+        history.pushState(null, null, `?page=${numPage}`);
         function setValsToCards() {
             imgs = document.querySelectorAll(".card-img-top");
             cTitles = document.querySelectorAll(".card-title");
@@ -30,7 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // конецтут
         return numPage;
     }
-    let numPage = openMenu();
+    var GETObj = parseGetParams();
+    if (GETObj.page != null) {
+        let numPage = openMenu(Number(GETObj.page));
+    } else {
+        let numPage = openMenu();
+    }
     var page_buttons = document.querySelectorAll(".page-link");
     var curr = page_buttons[numPage];
     var prev = 1;
