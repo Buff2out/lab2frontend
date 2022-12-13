@@ -34,6 +34,7 @@
                         </li>
                     </ul>
                     <div class="navbar-nav">
+                        <a class="nav-link" href="../profile/">Профиль</a>
                         <a class="nav-link" href="../registration/">Регистрация</a>
                         <a class="nav-link" href="../login/">Вход</a>
                     </div>
@@ -48,13 +49,33 @@
             <div class="p-3 mb-3 border rounded">
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 align-items-center">
+
                     <div class="col">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                                WOK
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">Супы</a>
-                            <a href="#" class="list-group-item list-group-item-action">Пицца</a>
+                        <div class="food-sort dropdown">
+                            <button
+                                class="btn btn-lg border rounded dropdown-toggle w-100 d-flex justify-content-between align-items-center"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Выберите категорию
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">WOK</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Супы</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Пицца</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Десерты</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Напитки</a></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -63,7 +84,7 @@
                             <button
                                 class="btn btn-lg border rounded dropdown-toggle w-100 d-flex justify-content-between align-items-center"
                                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Сортировка...
+                                Сортировать по...
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
