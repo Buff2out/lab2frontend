@@ -24,67 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return await response.json();
 
     }
-    function releasePagBtn (i, paginObj) {
-        // console.log(menuPage);
-        paginObj.page_buttons[paginObj.prev].classList.remove("active");
-        paginObj.page_buttons[i].classList.add("active");
-        // случаи:
-        // 1 !2! 3 click << (станет !1! 2 3)
-        // 1 2 !3! click >> (станет: 2 3 !4!)
-        // 3 !4! 5 click >> (станет 3 4 !5!) нужно учесть size
-        if ("«" === paginObj.page_buttons[i].textContent) {
-            paginObj.page_buttons[i].classList.remove("active");
-            if (paginObj.prev === 1) {
-                paginObj.page_buttons[1].textContent = String(Number(paginObj.page_buttons[1].textContent) - 1);
-                paginObj.page_buttons[2].textContent = String(Number(paginObj.page_buttons[2].textContent) - 1);
-                paginObj.page_buttons[3].textContent = String(Number(paginObj.page_buttons[3].textContent) - 1);
-
-                paginObj.page_buttons[paginObj.prev].classList.add("active");
-                // prev = prev;
-            } else {
-                paginObj.page_buttons[paginObj.prev - 1].classList.add("active");
-                paginObj.prev--;
-            }
-            paginObj.numPage--;
-
-        } else if ("»" === paginObj.page_buttons[i].textContent) {
-            paginObj.page_buttons[i].classList.remove("active");
-            if (paginObj.prev === 3) {
-                paginObj.page_buttons[1].textContent = String(Number(paginObj.page_buttons[1].textContent) + 1);
-                paginObj.page_buttons[2].textContent = String(Number(paginObj.page_buttons[2].textContent) + 1);
-                paginObj.page_buttons[3].textContent = String(Number(paginObj.page_buttons[3].textContent) + 1);
-
-                paginObj.page_buttons[paginObj.prev].classList.add("active");
-                // prev = prev;
-            } else {
-                paginObj.page_buttons[paginObj.prev + 1].classList.add("active");
-                paginObj.prev++;
-            }
-            paginObj.numPage++;
-        } else {
-            paginObj.numPage = Number(paginObj.page_buttons[i].textContent);
-            paginObj.prev = i;
-        }
-        if (1 === Number(paginObj.page_buttons[1].textContent) && 1 === Number(paginObj.page_buttons[paginObj.prev].textContent)) {
-            paginObj.page_buttons[0].classList.add("disabled");
-        } else if (Number(menuPage.pagination.count) === Number(paginObj.page_buttons[paginObj.prev].textContent)) {
-            paginObj.page_buttons[4].classList.add("disabled");
-            if (Number(menuPage.pagination.count) !== Number(paginObj.page_buttons[3].textContent)) {
-                paginObj.page_buttons[3].classList.add("disabled");
-                if (Number(menuPage.pagination.count) !== Number(paginObj.page_buttons[2].textContent)) {
-                    paginObj.page_buttons[2].classList.add("disabled");
-                }
-            }
-        } else {
-            paginObj.page_buttons[0].classList.remove("disabled");
-            paginObj.page_buttons[1].classList.remove("disabled");
-            paginObj.page_buttons[2].classList.remove("disabled");
-            paginObj.page_buttons[3].classList.remove("disabled");
-            paginObj.page_buttons[4].classList.remove("disabled");
-        }
-        history.pushState(null, null, `?page=${paginObj.prev}`);
-        return paginObj;
-    }
     function f1 (GETParamsObj, paginObj, menuPage) {
         function setPagHtmlVals() {
             imgs = document.querySelectorAll(".card-img-top");
