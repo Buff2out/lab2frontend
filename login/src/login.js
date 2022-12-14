@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.token) {
                 localStorage.setItem('token', responseObj.token);
                 console.log(localStorage.getItem('token')); // read
+                history.pushState(null, null, ``);
+                location.reload();
             } else {
                 dang.classList.remove("visually-hidden");
             }

@@ -307,8 +307,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     resolve(getProfile());
                 });
                 promise.then(function (respProfile) {
+
                     console.log("respProfile");
                     console.log(respProfile);
+                    if (respProfile.email) {
+                        let profileHtml = document.querySelector("#prfl");
+                        let regHtml = document.querySelector("#reg");
+                        let loginHtml = document.querySelector("#loging");
+                        let lgoutHtml = document.querySelector("#lgout");
+                        regHtml.classList.add("visually-hidden");
+                        loginHtml.classList.add("visually-hidden");
+                        profileHtml.textContent = respProfile.email;
+                        profileHtml.classList.remove("visually-hidden");
+                        lgoutHtml.classList.remove("visually-hidden");
+                    }
                 });
                 let arrPG = f1(GETParamsObj, paginObj, value);
                 paginObj = arrPG[0];
