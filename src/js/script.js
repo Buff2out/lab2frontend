@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let imgs = document.querySelectorAll(".card-img-top");
             let cTitles = document.querySelectorAll(".card-title");
             let mCategories = document.querySelectorAll(".meal-category");
+            let mRatings = document.querySelectorAll(".meal-rating");
             let mPrices = document.querySelectorAll(".meal-price");
             let cTexts = document.querySelectorAll(".card-text");
             for (let i = 0; i < menuPage.dishes.length; i++) {
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imgs[i].src = menuPage.dishes[i].image;
                 cTitles[i].textContent = menuPage.dishes[i].name;
                 mCategories[i].textContent = menuPage.dishes[i].category;
+                mRatings[i].textContent = Math.round(menuPage.dishes[i].rating);
                 mPrices[i].textContent = menuPage.dishes[i].price;
                 cTexts[i].textContent = menuPage.dishes[i].description;
             }
@@ -143,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let numPage = 1;
         let vegBool = false;
         let ctgs = [];
+        let chBxsCtgs = document.querySelectorAll(".CBCtgs");
         let sorting = "nameasc";
         let aLineString = "";
         try {
@@ -177,18 +180,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 switch (GETParamsObj.categories[i]) {
                     case "wok":
                         ctgs.push("wok");
+                        chBxsCtgs[0].setAttribute("checked", "");
                         break;
                     case "pizza":
                         ctgs.push("pizza");
+                        chBxsCtgs[1].setAttribute("checked", "");
                         break;
                     case "soup":
                         ctgs.push("soup");
+                        chBxsCtgs[2].setAttribute("checked", "");
                         break;
                     case "dessert":
                         ctgs.push("dessert");
+                        chBxsCtgs[3].setAttribute("checked", "");
                         break;
                     case "drink":
                         ctgs.push("drink");
+                        chBxsCtgs[4].setAttribute("checked", "");
                         break;
                     default:
                         GETParamsObj.categories.splice(i, 1);
@@ -250,10 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let numPage = arrNumPageAlineString[0];
         let aLineString = arrNumPageAlineString[1];
         let vegBool = arrNumPageAlineString[2];
-        let ctgs = arrNumPageAlineString[3];
+        let ctgs = [];
         let sorting = arrNumPageAlineString[4];
-        console.log("ctgs:");
-        console.log(ctgs);
         let GETParamsObj3 = new Promise(function (resolve) {
             resolve(parseGetParams());
         });
@@ -277,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let sbmPolBtn = document.querySelector("#submitPolzunki");
                 let sortSelector = document.querySelectorAll(".clsorting");
                 let srtBtn_0 = document.querySelector(".srtBtn0");
+                let chBxsCtgs = document.querySelectorAll(".CBCtgs");
                 paginObj.page_buttons[0].addEventListener("click", () => {
                     history.pushState(null, null, `?page=${Number(paginObj.prev) - 1}${aLineString}`);
                     location.reload();
@@ -303,6 +310,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 sbmPolBtn.addEventListener("click", () => {
                     let aLineString2 = "";
+                    for (let j = 0; j < chBxsCtgs.length; j++) {
+                        if (j === 0 && chBxsCtgs[j].checked) {
+                            ctgs.push("wok");
+                        } else if (j === 1 && chBxsCtgs[j].checked) {
+                            ctgs.push("pizza");
+                        } else if (j === 2 && chBxsCtgs[j].checked) {
+                            ctgs.push("soup");
+                        } else if (j === 3 && chBxsCtgs[j].checked) {
+                            ctgs.push("dessert");
+                        } else if (j === 4 && chBxsCtgs[j].checked) {
+                            ctgs.push("drink");
+                        }
+                    }
                     if ((ctgs === undefined || ctgs === "") || ctgs.length === 0) {
                         aLineString2 = `&vegetarian=${String(vegBool)}&sorting=${sorting}`;
 
