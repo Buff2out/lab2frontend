@@ -2,19 +2,29 @@ var menuPage = {};
 document.addEventListener('DOMContentLoaded', () => {
     async function parseGetParams() {
         var query = location.search.substr(1);
-        var params = query.split("&");
-        var result = {};
-        for(var i=0; i<params.length; i++) {
-            var item = params[i].split("=");
+        if (query === "") {
+            return "";
+        } else {
+            console.log("query");
+            console.log(query);
+            var params = query.split("&");
+            console.log("params");
+            console.log(params);
+            var result = {};
+            for (var i = 0; i < params.length; i++) {
+                var item = params[i].split("=");
 
-            const key = item[0].replace(/\[|\]/g, '')
-            const value = item[1].toLowerCase();
+                const key = item[0].replace(/\[|\]/g, '')
+                const value = item[1].toLowerCase();
 
-            if(!result[key]) result[key] = [value]
-            else result[key].push(value)
+                if (!result[key]) result[key] = [value]
+                else result[key].push(value)
 
+            }
+            console.log("result");
+            console.log(result);
+            return await result;
         }
-        return await result;
     }
 
     async function openMenu(numPage=1, aLineString="") {
@@ -128,12 +138,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return [paginObj, GETParamsObj];
     }
     function parseParsedALine (GETParamsObj) {
-        let numPage = 0;
+        let numPage = 1;
         let vegBool = false;
         let ctgs = [];
-        let sorting = "";
+        let sorting = "nameasc";
         let aLineString = "";
-        GETParamsObj.page = GETParamsObj.page[0];
+        try {
+            GETParamsObj.page = GETParamsObj.page[0];
+        } catch (error) {
+            GETParamsObj.page = numPage;
+        }
         if (GETParamsObj.page === undefined) {
             numPage = 1;
         } else if (Number(GETParamsObj.page) < 1) {
@@ -141,7 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             numPage = Number(GETParamsObj.page);
         }
-        GETParamsObj.vegetarian = GETParamsObj.vegetarian[0];
+        try {
+            GETParamsObj.vegetarian = GETParamsObj.vegetarian[0];
+        } catch (error) {
+            GETParamsObj.vegetarian = String(vegBool);
+        }
         switch (GETParamsObj.vegetarian) {
             case "false":
                 vegBool = false;
@@ -175,7 +193,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        GETParamsObj.sorting = GETParamsObj.sorting[0];
+        try {
+            GETParamsObj.sorting = GETParamsObj.sorting[0];
+        } catch (error) {
+            GETParamsObj.sorting = sorting;
+        }
         switch (GETParamsObj.sorting) {
             case "nameasc":
                 sorting = "nameasc";
@@ -200,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         GETParamsObj.page = numPage;
         GETParamsObj.vegetarian = vegBool;
+        GETParamsObj.sorting = sorting;
         ctgs = GETParamsObj.categories;
         GETParamsObj.sorting = sorting;
         // v дублирование кода ниже встретится, возможен рефакторинг (в обозримом или нет будущем) v
