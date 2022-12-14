@@ -1,7 +1,13 @@
 @import "init.scss";
 
-dl, ol, ul {
+dl,
+ol,
+ul {
     margin-bottom: 0;
+}
+
+.main {
+    min-height: 93vh;
 }
 
 .navbar {

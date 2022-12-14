@@ -73,8 +73,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*--------------------*/
-dl, ol, ul {
+dl,
+ol,
+ul {
   margin-bottom: 0;
+}
+
+.main {
+  min-height: 93vh;
 }
 
 .navbar {
