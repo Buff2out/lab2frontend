@@ -28,11 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
         function setPagHtmlVals() {
             imgs = document.querySelectorAll(".card-img-top");
             cTitles = document.querySelectorAll(".card-title");
+            mCategories = document.querySelectorAll(".meal-category");
             mPrices = document.querySelectorAll(".meal-price");
             cTexts = document.querySelectorAll(".card-text");
-            for (let i = 0; i < imgs.length; i++) {
+            console.log(menuPage.dishes)
+            for (let i = 0; i < menuPage.dishes.length; i++) {
                 imgs[i].src = menuPage.dishes[i].image;
                 cTitles[i].textContent = menuPage.dishes[i].name;
+                mCategories[i].textContent = menuPage.dishes[i].category;
                 mPrices[i].textContent = menuPage.dishes[i].price;
                 cTexts[i].textContent = menuPage.dishes[i].description;
             }
