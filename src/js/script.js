@@ -75,7 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 mRatings[i].textContent = Math.round(menuPage.dishes[i].rating);
                 mPrices[i].textContent = menuPage.dishes[i].price;
                 cTexts[i].textContent = menuPage.dishes[i].description;
+
+                cTitles[i].addEventListener("click", () => {
+                    gettingMealId(menuPage.dishes[i].id);
+                })
             }
+        }
+
+        function gettingMealId(dishId) {
+            history.pushState(null, null, `item?id=${dishId}`);
+            location.reload();
         }
 
         if (Number(GETParamsObj.page) > Number(menuPage.pagination.count)) {
