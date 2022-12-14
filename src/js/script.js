@@ -45,12 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
             let cardsH = document.querySelectorAll(".h-100");
             let imgs = document.querySelectorAll(".card-img-top");
             let cTitles = document.querySelectorAll(".card-title");
+            let mCategories = document.querySelectorAll(".meal-category");
             let mPrices = document.querySelectorAll(".meal-price");
             let cTexts = document.querySelectorAll(".card-text");
             for (let i = 0; i < menuPage.dishes.length; i++) {
                 cardsH[i].classList.remove("visually-hidden");
                 imgs[i].src = menuPage.dishes[i].image;
                 cTitles[i].textContent = menuPage.dishes[i].name;
+                mCategories[i].textContent = menuPage.dishes[i].category;
                 mPrices[i].textContent = menuPage.dishes[i].price;
                 cTexts[i].textContent = menuPage.dishes[i].description;
             }

@@ -4,8 +4,11 @@
 <head>
     <meta charster="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
     <link rel="stylesheet" href="../src/css/style.css">
 
     <title>СУПЕРДУПЕРПРОДЖЕКТ</title>
@@ -13,218 +16,258 @@
 
 <body>
 
-    <header class="header">
-        <nav class="navbar navbar-expand-lg bg-light border-bottom">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../">Delivery.Кушац</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+<header class="header">
+    <nav class="navbar navbar-expand-lg bg-light border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../">Delivery.Кушац</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link menuLink" href="../">Меню</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Заказы</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Корзина</a>
-                        </li>
-                    </ul>
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="../profile/">Профиль</a>
-                        <a class="nav-link" href="../registration/">Регистрация</a>
-                        <a class="nav-link" href="../login/">Вход</a>
-                    </div>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link menuLink" href="../">Меню</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../orders/">Заказы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../cart/">Корзина</a>
+                    </li>
+                </ul>
+                <div class="navbar-nav">
+                    <a class="nav-link" href="../profile/">Профиль</a>
+                    <a class="nav-link" href="../registration/">Регистрация</a>
+                    <a class="nav-link" href="../login/">Вход</a>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
-    <main>
-        <div class="container main-container">
+<main class="main">
+    <div class="container main-container">
 
-            <div class="p-3 mb-3 border rounded">
+        <div class="p-3 mb-3 border rounded">
 
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 align-items-center">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 align-items-center">
 
-                    <div class="col">
-                        <div class="food-sort dropdown">
-                            <button
+                <div class="col">
+                    <div class="food-sort dropdown">
+                        <button
                                 class="btn btn-lg border rounded dropdown-toggle w-100 d-flex justify-content-between align-items-center"
                                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Выберите категорию
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">WOK</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Супы</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Пицца</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Десерты</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Напитки</a></li>
-                            </ul>
-                        </div>
+                            Категории
+                        </button>
+                        <ul class="dropdown-menu p-3">
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="wok-checkbox">
+                                    <label class="form-check-label" for="wok-checkbox">
+                                        WOK
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pizza-checkbox">
+                                    <label class="form-check-label" for="pizza-checkbox">
+                                        Пицца
+                                    </label>
+                                </div>
+                            </li>
+                            <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="soup-checkbox">
+                                    <label class="form-check-label" for="soup-checkbox">
+                                        Супы
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dessert-checkbox">
+                                    <label class="form-check-label" for="dessert-checkbox">
+                                        Десерты
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="drink-checkbox">
+                                    <label class="form-check-label" for="drink-checkbox">
+                                        Напитки
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
+                </div>
 
-                    <div class="col">
-                        <div class="food-sort dropdown">
-                            <button
+                <div class="col">
+                    <div class="food-sort dropdown">
+                        <button
                                 class="srtBtn0 btn btn-lg border rounded dropdown-toggle w-100 d-flex justify-content-between align-items-center"
                                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Сортировать по...
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <h5 class="dropdown-header">По названию</h5>
-                                </li>
-                                <li><a class="dropdown-item clsorting">А-Я</a></li>
-                                <li><a class="dropdown-item clsorting">Я-А</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <h5 class="dropdown-header">По цене</h5>
-                                </li>
-                                <li><a class="dropdown-item clsorting">По возрастанию</a></li>
-                                <li><a class="dropdown-item clsorting">По убыванию</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <h5 class="dropdown-header">По рейтингу</h5>
-                                </li>
-                                <li><a class="dropdown-item clsorting">По возрастанию</a></li>
-                                <li><a class="dropdown-item clsorting">По убыванию</a></li>
-                            </ul>
-                        </div>
+                            Сортировка
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <h5 class="dropdown-header">По названию</h5>
+                            </li>
+                            <li><a class="dropdown-item clsorting">А-Я</a></li>
+                            <li><a class="dropdown-item clsorting">Я-А</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <h5 class="dropdown-header">По цене</h5>
+                            </li>
+                            <li><a class="dropdown-item clsorting">По возрастанию</a></li>
+                            <li><a class="dropdown-item clsorting">По убыванию</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <h5 class="dropdown-header">По рейтингу</h5>
+                            </li>
+                            <li><a class="dropdown-item clsorting">По возрастанию</a></li>
+                            <li><a class="dropdown-item clsorting">По убыванию</a></li>
+                        </ul>
                     </div>
+                </div>
 
-                    <div class="col">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Показать только
-                                вегетарианские</label>
-                        </div>
+                <div class="col">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Показать только
+                            вегетарианские</label>
                     </div>
+                </div>
 
-                    <div class="col text-end">
-                        <input class="btn btn-primary btn-lg" type="submit" value="Применить" id="submitPolzunki">
-                    </div>
-
+                <div class="col text-end">
+                    <input class="btn btn-primary btn-lg" type="submit" value="Применить" id="submitPolzunki">
                 </div>
 
             </div>
-            <div class="cards-grid">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-                    <div class="col">
-                        <div class="card h-100 visually-hidden">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                            <div class="card-footer">
-                                <p class="text-muted">Цена - <span class="meal-price">000</span>р</p>
-                                <button type="button" class="btn btn-primary">В корзину</button>
-                            </div>
+
+        </div>
+        <div class="cards-grid">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+                <div class="col">
+                    <div class="card h-100 visually-hidden">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="h4 card-title">Card title</h4>
+                            <p>Категория блюда - <span class="meal-category">000</span></p>
+
+                            <p class="card-text">This is a longer card with supporting text below as a natural
+                                lead-in to additional content. This content is a little bit longer.</p>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 visually-hidden">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                            <div class="card-footer">
-                                <p class="text-muted">Цена - <span class="meal-price">000</span>р</p>
-                                <button type="button" class="btn btn-primary">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 visually-hidden">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                            <div class="card-footer">
-                                <p class="text-muted">Цена - <span class="meal-price">000</span>р</p>
-                                <button type="button" class="btn btn-primary">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 visually-hidden">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                            <div class="card-footer">
-                                <p class="text-muted">Цена - <span class="meal-price">000</span>р</p>
-                                <button type="button" class="btn btn-primary">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 visually-hidden">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
-                            <div class="card-footer">
-                                <p class="text-muted">Цена - <span class="meal-price">000</span>р</p>
-                                <button type="button" class="btn btn-primary">В корзину</button>
-                            </div>
+                        <div class="card-footer">
+                            <p>Цена - <span class="meal-price">000</span>р</p>
+                            <button type="button" class="btn btn-primary">В корзину</button>
                         </div>
                     </div>
                 </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination pt-3 pb-5">
-                        <li class="page-item"><a class="page-link disabled" href="#">«</a></li>
-                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">»</a></li>
-                    </ul>
-                </nav>
+                <div class="col">
+                    <div class="card h-100 visually-hidden">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="h4 card-title">Card title</h4>
+                            <p>Категория блюда - <span class="meal-category">000</span></p>
+                            <p class="card-text">This is a longer card with supporting text below as a natural
+                                lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>Цена - <span class="meal-price">000</span>р</p>
+                            <button type="button" class="btn btn-primary">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 visually-hidden">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="h4 card-title">Card title</h4>
+                            <p>Категория блюда - <span class="meal-category">000</span></p>
+                            <p class="card-text">This is a longer card with supporting text below as a natural
+                                lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>Цена - <span class="meal-price">000</span>р</p>
+                            <button type="button" class="btn btn-primary">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 visually-hidden">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="h4 card-title">Card title</h4>
+                            <p>Категория блюда - <span class="meal-category">000</span></p>
+                            <p class="card-text">This is a longer card with supporting text below as a natural
+                                lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>Цена - <span class="meal-price">000</span>р</p>
+                            <button type="button" class="btn btn-primary">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 visually-hidden">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="h4 card-title">Card title</h4>
+                            <p>Категория блюда - <span class="meal-category">000</span></p>
+                            <p class="card-text">This is a longer card with supporting text below as a natural
+                                lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                        <div class="card-footer">
+                            <p>Цена - <span class="meal-price">000</span>р</p>
+                            <button type="button" class="btn btn-primary">В корзину</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pt-3 pb-5">
+                    <li class="page-item"><a class="page-link disabled">«</a></li>
+                    <li class="page-item"><a class="page-link active">1</a></li>
+                    <li class="page-item"><a class="page-link">2</a></li>
+                    <li class="page-item"><a class="page-link">3</a></li>
+                    <li class="page-item"><a class="page-link">»</a></li>
+                </ul>
+            </nav>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="footer bg-light border-top">
-        <div class="container">
-            <span class="copyright text-muted">© 2022 - Delivery.Кушац</span>
-        </div>
-    </footer>
+<footer class="footer bg-light border-top">
+    <div class="container">
+        <span class="copyright text-muted">© 2022 - Delivery.Кушац</span>
+    </div>
+</footer>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-    </script>
+</script>
 
-    <script src="src/js/script.js"></script>
+<script src="src/js/script.js"></script>
 
 </body>
 
