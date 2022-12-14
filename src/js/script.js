@@ -32,11 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function f1 (GETParamsObj, paginObj, menuPage) {
         function setPagHtmlVals(menuPage) {
-            imgs = document.querySelectorAll(".card-img-top");
-            cTitles = document.querySelectorAll(".card-title");
-            mPrices = document.querySelectorAll(".meal-price");
-            cTexts = document.querySelectorAll(".card-text");
+            let cardsH = document.querySelectorAll(".h-100");
+            let imgs = document.querySelectorAll(".card-img-top");
+            let cTitles = document.querySelectorAll(".card-title");
+            let mPrices = document.querySelectorAll(".meal-price");
+            let cTexts = document.querySelectorAll(".card-text");
             for (let i = 0; i < menuPage.dishes.length; i++) {
+                cardsH[i].classList.remove("visually-hidden");
                 imgs[i].src = menuPage.dishes[i].image;
                 cTitles[i].textContent = menuPage.dishes[i].name;
                 mPrices[i].textContent = menuPage.dishes[i].price;
@@ -51,8 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             numPage = Number(GETParamsObj.page);
         }
-        //history.pushState(null, null, `?page=${numPage}`);
-        console.log(GETParamsObj);
         switch (numPage) {
             case 1:
                 paginObj.page_buttons[1].classList.add("active");
@@ -93,6 +93,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     paginObj.page_buttons[4].classList.add("disabled");
                 }
         }
+        switch (String(GETParamsObj.vegetarian)) {
+            case "true":
+                paginObj.vegSwitcher.classList.add("active");
+                break;
+        }
+        switch (String(GETParamsObj.sorting)) {
+            case "nameasc":
+                paginObj.srtBtn_0.textContent = "А-Я";
+                break;
+            case "namedesc":
+                paginObj.srtBtn_0.textContent = "Я-А";
+                break;
+            case "priceasc":
+                paginObj.srtBtn_0.textContent = "По цене Возр";
+                break;
+            case "pricedesc":
+                paginObj.srtBtn_0.textContent = "По цене Убыв";
+                break;
+            case "ratingasc":
+                paginObj.srtBtn_0.textContent = "По рейт Возр";
+                break;
+            case "ratingdesc":
+                paginObj.srtBtn_0.textContent = "По рейт Убыв";
+                break;
+
+        }
         GETParamsObj.page = numPage;
         //openMenu(Number(numPage));
         paginObj.prev = numPage;
@@ -107,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let ctgs = [];
         let sorting = "";
         let aLineString = "";
+        GETParamsObj.page = GETParamsObj.page[0];
         if (GETParamsObj.page === undefined) {
             numPage = 1;
         } else if (Number(GETParamsObj.page) < 1) {
@@ -114,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             numPage = Number(GETParamsObj.page);
         }
+        GETParamsObj.vegetarian = GETParamsObj.vegetarian[0];
         switch (GETParamsObj.vegetarian) {
             case "false":
                 vegBool = false;
@@ -147,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+        GETParamsObj.sorting = GETParamsObj.sorting[0];
         switch (GETParamsObj.sorting) {
             case "nameasc":
                 sorting = "nameasc";
@@ -173,19 +202,20 @@ document.addEventListener('DOMContentLoaded', () => {
         GETParamsObj.vegetarian = vegBool;
         ctgs = GETParamsObj.categories;
         GETParamsObj.sorting = sorting;
+        // v дублирование кода ниже встретится, возможен рефакторинг (в обозримом или нет будущем) v
         if (GETParamsObj.categories === undefined || GETParamsObj.categories.length === 0) {
             aLineString = `&vegetarian=${vegBool}&sorting=${sorting}`;
-            history.pushState(null, null, `?page=${numPage}${aLineString}`);
         } else {
             aLineString = `&vegetarian=${vegBool}&sorting=${sorting}`;
             for (let i = 0; i < ctgs.length; i++) {
                 aLineString = `${aLineString}&categories=${ctgs[i]}`;
             }
-
-            history.pushState(null, null, `?page=${numPage}${aLineString}`);
         }
-        console.log(numPage, aLineString)
-        return [numPage, aLineString];
+        console.log("f1");
+        console.log(vegBool);
+        history.pushState(null, null, `?page=${numPage}${aLineString}`);
+        // ^ вот этого кода ^
+        return [numPage, aLineString, vegBool, ctgs, sorting];
     }
     let GETParamsObj2 = new Promise(function (resolve) {
         resolve(parseGetParams());
@@ -194,6 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let arrNumPageAlineString = parseParsedALine(GETParamsObj22);
         let numPage = arrNumPageAlineString[0];
         let aLineString = arrNumPageAlineString[1];
+        let vegBool = arrNumPageAlineString[2];
+        let ctgs = arrNumPageAlineString[3];
+        let sorting = arrNumPageAlineString[4];
+        console.log("ctgs:");
+        console.log(ctgs);
         let GETParamsObj3 = new Promise(function (resolve) {
             resolve(parseGetParams());
         });
@@ -202,7 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let paginObj = {
                 page_buttons: document.querySelectorAll(".page-link"),
                 prev: numPage,
-                numPage: numPage
+                numPage: numPage,
+                vegSwitcher: document.querySelector("#submitPolzunki"),
+                srtBtn_0: document.querySelector(".srtBtn0")
             };
             let menuPage2 = new Promise(function (resolve) {
                 resolve(openMenu(numPage, aLineString))
@@ -211,6 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 let arrPG = f1(GETParamsObj, paginObj, value);
                 paginObj = arrPG[0];
                 GETParamsObj = arrPG[1];
+                let switchVeg = document.querySelector("#flexSwitchCheckDefault");
+                let sbmPolBtn = document.querySelector("#submitPolzunki");
+                let sortSelector = document.querySelectorAll(".clsorting");
+                let srtBtn_0 = document.querySelector(".srtBtn0");
                 paginObj.page_buttons[0].addEventListener("click", () => {
                     history.pushState(null, null, `?page=${Number(paginObj.prev) - 1}${aLineString}`);
                     location.reload();
@@ -231,6 +272,56 @@ document.addEventListener('DOMContentLoaded', () => {
                     history.pushState(null, null, `?page=${Number(paginObj.prev) + 1}${aLineString}`);
                     location.reload();
                 });
+                switchVeg.addEventListener("click", () => {
+                    vegBool = !vegBool;
+                    console.log(vegBool);
+                });
+                sbmPolBtn.addEventListener("click", () => {
+                    let aLineString2 = "";
+                    if ((ctgs === undefined || ctgs === "") || ctgs.length === 0) {
+                        aLineString2 = `&vegetarian=${String(vegBool)}&sorting=${sorting}`;
+
+                    } else {
+                        aLineString2 = `&vegetarian=${vegBool}&sorting=${sorting}`;
+                        for (let i = 0; i < ctgs.length; i++) {
+                            aLineString2 = `${aLineString2}&categories=${ctgs[i]}`;
+                        }
+                    }
+                    history.pushState(null, null, `?page=1${aLineString2}`);
+                    location.reload();
+                });
+                for (let j = 0; j < sortSelector.length; j++) {
+                    sortSelector[j].addEventListener("click", () => {
+                        console.log("j");
+                        console.log(j);
+                        switch (j) {
+                            case 0:
+                                sorting = "nameasc";
+                                srtBtn_0.textContent = "А-Я";
+                                break;
+                            case 1:
+                                sorting = "namedesc";
+                                srtBtn_0.textContent = "Я-А";
+                                break;
+                            case 2:
+                                sorting = "priceasc";
+                                srtBtn_0.textContent = "По цене Возр";
+                                break;
+                            case 3:
+                                sorting = "pricedesc";
+                                srtBtn_0.textContent = "По цене Убыв";
+                                break;
+                            case 4:
+                                sorting = "ratingasc";
+                                srtBtn_0.textContent = "По рейт Возр";
+                                break;
+                            case 5:
+                                sorting = "ratingdesc";
+                                srtBtn_0.textContent = "По рейт Убыв";
+                                break;
+                        }
+                    })
+                }
             });
         });
     });
@@ -241,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //openMenu(Number(GETParamsObj.page));
 
     document.querySelector(".menuLink").addEventListener("click", () => {
-        openMenu(numPage, aLineString);
+        history.pushState(null, null, ``);
+        location.reload();
     });
 });
