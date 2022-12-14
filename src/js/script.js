@@ -30,15 +30,33 @@ document.addEventListener('DOMContentLoaded', () => {
     async function openMenu(numPage=1, aLineString="") {
         // задаём значения для innerhtml тутъ
         // конецтут
+        const tokenForProfile = localStorage.getItem('token');
         const linkToDish = "https://food-delivery.kreosoft.ru/api/dish";
         const response = await fetch(`${linkToDish}?page=${numPage}${aLineString}`, {
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${tokenForProfile}`
+
             }
         });
         return await response.json();
 
+    }
+
+    async function getProfile() {
+        const linkToProfile = "https://food-delivery.kreosoft.ru/api/account/profile";
+        const tokenForProfile = localStorage.getItem('token');
+        console.log("tokenForProfile");
+        console.log(tokenForProfile);
+        const response = await fetch(`${linkToProfile}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${tokenForProfile}`
+            }
+        });
+        return await response.json();
     }
     function f1 (GETParamsObj, paginObj, menuPage) {
         function setPagHtmlVals(menuPage) {
@@ -273,9 +291,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 srtBtn_0: document.querySelector(".srtBtn0")
             };
             let menuPage2 = new Promise(function (resolve) {
-                resolve(openMenu(numPage, aLineString))
+                resolve(openMenu(numPage, aLineString));
             });
             menuPage2.then(function(value) {
+                let promise = new Promise(function (resolve) {
+                    resolve(getProfile());
+                });
+                promise.then(function (respProfile) {
+                    console.log("respProfile");
+                    console.log(respProfile);
+                });
                 let arrPG = f1(GETParamsObj, paginObj, value);
                 paginObj = arrPG[0];
                 GETParamsObj = arrPG[1];
