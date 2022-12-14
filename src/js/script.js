@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let imgs = document.querySelectorAll(".card-img-top");
             let cTitles = document.querySelectorAll(".card-title");
             let mCategories = document.querySelectorAll(".meal-category");
+            let mRatings = document.querySelectorAll(".meal-rating");
             let mPrices = document.querySelectorAll(".meal-price");
             let cTexts = document.querySelectorAll(".card-text");
             for (let i = 0; i < menuPage.dishes.length; i++) {
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 imgs[i].src = menuPage.dishes[i].image;
                 cTitles[i].textContent = menuPage.dishes[i].name;
                 mCategories[i].textContent = menuPage.dishes[i].category;
+                mRatings[i].textContent = Math.round(menuPage.dishes[i].rating);
                 mPrices[i].textContent = menuPage.dishes[i].price;
                 cTexts[i].textContent = menuPage.dishes[i].description;
             }
