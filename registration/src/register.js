@@ -1,6 +1,6 @@
 // without ajax
 document.addEventListener('DOMContentLoaded', () => {
-    async function sendData(params, token) {
+    async function sendData(params) {
         // example POST to server
         // {
         //   "fullName": "string",
@@ -12,42 +12,91 @@ document.addEventListener('DOMContentLoaded', () => {
         //   "phoneNumber": "string"
         // }
         const linkToReg = "https://food-delivery.kreosoft.ru/api/account/register";
+        console.log(JSON.stringify(params));
         const response = await fetch(`${linkToReg}`, {
-            method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'body': params,
-                'Authorization': `Bearer ${token}`
-            }
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: (JSON.stringify(params)),
+            // 'Authorization': `Bearer ${token}`
         });
-        return await response;
+        return await response.json();
     }
     function getDataFromForms() {
         return {
-            fio: document.querySelector("#inputUserName"),
-            gend: document.querySelector("#inputSelectGender"),
-            phn: document.querySelector("#inputPhone"),
-            brth: document.querySelector("#inputDate"),
-            adrs: document.querySelector("#inputAddress"),
-            mail: document.querySelector("#inputEmail"),
-            pswd: document.querySelector("#inputPassword")
-        };
+            fullName: document.querySelector("#inputUserName").value,
+            password: document.querySelector("#inputPassword").value,
+            email: document.querySelector("#inputEmail").value,
+            address: document.querySelector("#inputAddress").value,
+            birthDate: document.querySelector("#inputDate").value,
+            gender: document.querySelector("#inputSelectGender").value,
+            phoneNumber: document.querySelector("#inputPhone").value
+        }
     }
-    function validAll() {
+    function validAll(user) {
         let regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
-        let user = getDataFromForms();
-        if (user.fio === "") {
-            console.log("fio incorrect")
-        }
-        if (regex.test(user.phn)) {
+        let dang = document.querySelectorAll(".text-danger");
+        let date = (user.birthDate).split("-");
+        let year = Number(date[0]);
+        let pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        let checkDate = /\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
 
-        } else {
-
+        for (let i = 0; i < dang.length; i++) {
+            dang[i].classList.add("visually-hidden");
         }
-        return false;
+        let bCheck = true;
+        if (user.fullName === "") {
+            dang[0].classList.remove("visually-hidden");
+            bCheck = false;
+        }
+        if (user.gender === "") {
+            dang[1].classList.remove("visually-hidden");
+            bCheck = false;
+        }
+        if (!regex.test(user.phoneNumber)) {
+            dang[2].classList.remove("visually-hidden");
+            bCheck = false;
+        }
+        if (!checkDate.test(user.birthDate) || (year > 2021 || year < 1900)) {
+            dang[3].classList.remove("visually-hidden");
+            bCheck = false;
+        }
+        if ("" === user.address) {
+            dang[4].classList.remove("visually-hidden");
+            bCheck = false;
+        }
+        if (!pattern.test(user.email)) {
+            dang[5].classList.remove("visually-hidden");
+            bCheck = false;
+        }
+        if ("" === user.password) {
+            dang[6].classList.remove("visually-hidden");
+            bCheck = false;
+        }
+        return bCheck;
     }
+    submitReg = document.querySelector(".btn-primary");
+    submitReg.addEventListener("click", () => {
+        user = getDataFromForms();
+        if (validAll(user)) {
+            console.log((user));
+            let promise = new Promise(function (resolve) {
+                resolve(sendData(user));
+            });
+            promise.then(function (response) {
+                console.log(response);
+                responseObj = response;
 
+                localStorage.setItem('token', responseObj.token);
+                console.log(localStorage.getItem('token')); // read
+            });
+        } else {
+            console.log("Unfortune");
+        }
+    });
     console.log("register works");
-    // localStorage.setItem('token', 'asY-x34SfYPk'); // write
+    //  // write
     // console.log(localStorage.getItem('token')); // read
 });
