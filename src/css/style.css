@@ -79,6 +79,10 @@ ul {
   margin-bottom: 0;
 }
 
+a {
+  cursor: pointer;
+}
+
 .main {
   min-height: 93vh;
 }
