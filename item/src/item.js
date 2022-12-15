@@ -1,14 +1,14 @@
-// парсим получившуюся часть url (id блюда)
+// достаем id из url-адреса
+// удаляем всё лишнее
+// получаем объект с 1 массивом из 1 элемента
+// возвращаем из функции только элемент массива
+
 function parseGetParams() {
     var query = location.search.substr(1);
     if (query === "") {
         return "";
     } else {
-        console.log("query");
-        console.log(query);
         var params = query.split("&");
-        console.log("params");
-        console.log(params);
         var result = {};
         for (var i = 0; i < params.length; i++) {
             var item = params[i].split("=");
@@ -20,13 +20,13 @@ function parseGetParams() {
             else result[key].push(value)
 
         }
-        console.log("result");
-        console.log(result);
         return result.id[0];
     }
 }
 
-// Обращаемся к серверу (где query - id блюда)
+// mealId - получившийся id из верхней функции
+// вбиваем его в запрос на сервер
+// с целью получить по id остальную информацию о блюде
 async function getMealId(mealId) {
 
     const linkToDish = "https://food-delivery.kreosoft.ru/api/dish/";
@@ -40,16 +40,34 @@ async function getMealId(mealId) {
 
 }
 
-
+// результат функции parseGetParams() (чистый id)
 var mealId = parseGetParams();
-console.log(mealId);
 
-
-
+// выполняем обращение к серверу 
 let getMealIdPromise = new Promise(function (resolve) {
     resolve(getMealId(mealId));
 });
 
-getMealIdPromise.then(function (value) {
-    console.log(value);
+// в случае успеха выполняем следующий код:
+getMealIdPromise.then(function (mealInfo) {
+    let mealImage = document.querySelector(".meal-image");
+    let mealTitle = document.querySelector(".meal-title");
+    let mealCategory = document.querySelector(".meal-category");
+    let mealVeg = document.querySelector(".veg-boolean");
+    let mealRating = document.querySelector(".meal-rating");
+    let mealText = document.querySelector(".meal-text");
+    let mealPrice = document.querySelector(".meal-price");
+
+    mealImage.src = mealInfo.image;
+    mealTitle.textContent = mealInfo.name;
+    mealCategory.textContent = mealInfo.category;
+    mealRating.textContent = Math.round(mealInfo.rating);
+    mealText.textContent = mealInfo.description;
+    mealPrice.textContent = mealInfo.price;
+
+    if (mealInfo.vegetarian) {
+        mealVeg.textContent = "Вегетарианское";
+    } else {
+        mealVeg.textContent = "Не вегетарианское";
+    }
 });
