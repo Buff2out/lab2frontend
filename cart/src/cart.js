@@ -28,6 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         return await response.json();
     }
+    async function deleteFromCart(id) {
+        const linkToCart = "https://food-delivery.kreosoft.ru/api/basket/dish/";
+        const tokenForProfile = localStorage.getItem('token');
+        const response = await fetch(`${linkToCart}${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenForProfile}`
+            }
+        });
+        return await response.json();
+    }
     async function getCart() {
         const linkToCart = "https://food-delivery.kreosoft.ru/api/basket/";
         const tokenForCart = localStorage.getItem('token');
@@ -74,11 +87,32 @@ document.addEventListener("DOMContentLoaded", () => {
             promiseCart.then(function (respCart) {
                 console.log(respCart);
                 let mealsImgs = document.querySelectorAll(".dish-image");
+                let mealName = document.querySelectorAll(".meal-name");
+                let totalPrices = document.querySelectorAll(".meal-total-price");
                 let mealCards = document.querySelectorAll(".meal-card");
+                let btnDanger = document.querySelectorAll(".btn-danger");
+                let amountDish = document.querySelectorAll(".amount");
+                let incToCart = document.querySelectorAll(".income");
                 for (let i = 0; i < respCart.length; i++) {
+                    amountDish[i].textContent = respCart[i].amount;
                     mealCards[i].classList.remove("visually-hidden");
                     mealsImgs[i].src = respCart[i].image;
+                    mealName[i].textContent = respCart[i].name;
+                    totalPrices[i].textContent = respCart[i].totalPrice;
                     console.log(mealsImgs[i].src);
+                    btnDanger[i].addEventListener("click", () => {
+                        promiseDelete = new Promise(function (resolve) {
+                            resolve(deleteFromCart(respCart[i].id));
+                            location.reload();
+                        });
+                    });
+                    incToCart[i].addEventListener("click", () => {
+                        promiseAdd = new Promise(function (resolve) {
+                            resolve(addToCart(respCart[i].id));
+                            location.reload();
+                        });
+                    });
+
                 }
             });
         }
