@@ -62,6 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         return await response.json();
     }
+    async function addToCart(id) {
+        const linkToCart = "https://food-delivery.kreosoft.ru/api/basket/dish/";
+        const tokenForProfile = localStorage.getItem('token');
+        const response = await fetch(`${linkToCart}${id}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenForProfile}`
+            }
+        });
+        return await response.json();
+    }
     function f1 (GETParamsObj, paginObj, menuPage) {
         function setPagHtmlVals(menuPage) {
             let cardsH = document.querySelectorAll(".h-100");
