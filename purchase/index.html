@@ -43,7 +43,50 @@
     </header>
 
     <main class="main">
-        <div class="container main-container">
+        <div class="container main-container pb-5">
+            <h1 class="h1">Оформление заказа</h1>
+            <h4 class="h4 pt-3">Данные покупателя</h4>
+            <div class="d-flex">
+                <form class="form-floating flex-grow-1 p-1">
+                    <input type="tel" class="form-control" id="phone-input" value="8 (800) 555-35-35" disabled>
+                    <label for="phone-input">Телефон</label>
+                </form>
+                <form class="form-floating flex-grow-1 p-1">
+                    <input type="email" class="form-control" id="email-input" value="example@mail.com" disabled>
+                    <label for="email-input">Email</label>
+                </form>
+            </div>
+            <h4 class="h4">Данные доставки</h4>
+            <div class="d-flex">
+                <div class="flex-grow-1">
+                    <label for="inputAddress" class="col-form-label">Адрес</label>
+                    <input type="text" class="form-control" id="inputAddress">
+                </div>
+
+                <div class="flex-grow-1">
+                    <label for="inputDeliveryDate" class="col-form-label">Время доставки</label>
+                    <input type="date" class="form-control" id="inputDeliveryDate">
+                </div>
+            </div>
+            <p class="pt-5">Список блюд:</p>
+
+            <div class="p-3 border rounded d-flex justify-content-between">
+                <div>
+                    <img src="..." class="col-1 meal-image" alt="...">
+                </div>
+                <div class="flex-grow-1">
+                    <p class="meal-title"> <strong>DD.MM.YYYY</strong> </p>
+                    <p>Цена: <span class="meal-price">000</span> руб.</p>
+                    <p>Количество: <span class="meal-count">0</span> шт.</p>
+                </div>
+                <div class="d-flex flex-column align-self-end">
+                    <span><strong>Стоимость: </strong><span class="meal-complex-price">000</span> руб.</span>
+                </div>
+            </div>
+            <p class="pt-3"><strong>Стоимость заказа: </strong><span class="order-price">9000</span> руб.</p>
+            <div class="btn btn-success">
+                Подтвердить заказ
+            </div>
 
         </div>
     </main>
