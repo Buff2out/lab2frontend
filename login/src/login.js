@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     async function sendData(params) {
-        const linkToReg = "https://food-delivery.kreosoft.ru/api/account/register";
+        const linkToReg = "https://food-delivery.kreosoft.ru/api/account/login";
         console.log(JSON.stringify(params));
         const response = await fetch(`${linkToReg}`, {
             headers: {
@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.token) {
                 localStorage.setItem('token', responseObj.token);
                 console.log(localStorage.getItem('token')); // read
+                history.pushState(null, null, ``);
+                location.replace("/");
             } else {
                 dang.classList.remove("visually-hidden");
             }

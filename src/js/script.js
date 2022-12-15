@@ -5,11 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (query === "") {
             return "";
         } else {
-            console.log("query");
-            console.log(query);
             var params = query.split("&");
-            console.log("params");
-            console.log(params);
             var result = {};
             for (var i = 0; i < params.length; i++) {
                 var item = params[i].split("=");
@@ -21,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 else result[key].push(value)
 
             }
-            console.log("result");
-            console.log(result);
             return await result;
         }
     }
@@ -47,10 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
     async function getProfile() {
         const linkToProfile = "https://food-delivery.kreosoft.ru/api/account/profile";
         const tokenForProfile = localStorage.getItem('token');
-        console.log("tokenForProfile");
-        console.log(tokenForProfile);
         const response = await fetch(`${linkToProfile}`, {
             method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${tokenForProfile}`
+            }
+        });
+        return await response.json();
+    }
+    async function logOut() {
+        const linkToLogout = "https://food-delivery.kreosoft.ru/api/account/logout";
+        const tokenForProfile = localStorage.getItem('token');
+        const response = await fetch(`${linkToLogout}`, {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${tokenForProfile}`
@@ -86,13 +90,18 @@ document.addEventListener('DOMContentLoaded', () => {
             history.pushState(null, null, `item?id=${dishId}`);
             location.reload();
         }
-
-        if (Number(GETParamsObj.page) > Number(menuPage.pagination.count)) {
-            numPage = menuPage.pagination.count;
-        } else if (Number(GETParamsObj.page) < 1) {
-            numPage = 1;
+        let numPage = 1;
+        let switchVeg = document.querySelector("#flexSwitchCheckDefault");
+        if (menuPage.pagination !== undefined) {
+            if (Number(GETParamsObj.page) > Number(menuPage.pagination.count)) {
+                numPage = menuPage.pagination.count;
+            } else if (Number(GETParamsObj.page) < 1) {
+                numPage = 1;
+            } else {
+                numPage = Number(GETParamsObj.page);
+            }
         } else {
-            numPage = Number(GETParamsObj.page);
+            location.replace("/");
         }
         switch (numPage) {
             case 1:
@@ -271,8 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 aLineString = `${aLineString}&categories=${ctgs[i]}`;
             }
         }
-        console.log("f1");
-        console.log(vegBool);
         history.pushState(null, null, `?page=${numPage}${aLineString}`);
         // ^ вот этого кода ^
         return [numPage, aLineString, vegBool, ctgs, sorting];
@@ -291,7 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
             resolve(parseGetParams());
         });
         GETParamsObj3.then(function (GETParamsObj){
-            console.log(GETParamsObj);
             let paginObj = {
                 page_buttons: document.querySelectorAll(".page-link"),
                 prev: numPage,
@@ -307,8 +313,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     resolve(getProfile());
                 });
                 promise.then(function (respProfile) {
-                    console.log("respProfile");
-                    console.log(respProfile);
+                    if (respProfile.email) {
+                        let profileHtml = document.querySelector("#prfl");
+                        let regHtml = document.querySelector("#reg");
+                        let loginHtml = document.querySelector("#loging");
+                        let lgoutHtml = document.querySelector("#lgout");
+                        regHtml.classList.add("visually-hidden");
+                        loginHtml.classList.add("visually-hidden");
+                        profileHtml.textContent = respProfile.email;
+                        profileHtml.classList.remove("visually-hidden");
+                        lgoutHtml.classList.remove("visually-hidden");
+                        lgoutHtml.addEventListener("click", () => {
+                            let promiseLogout = new Promise(function (resolve) {
+                                resolve(logOut());
+                            });
+                            promiseLogout.then(function (respLogout) {
+                                if (respLogout) {
+                                    console.log("Unsuccess Logout");
+                                } else {
+                                    console.log("Success Logout");
+                                }
+                                location.reload();
+                            });
+                        });
+                    }
                 });
                 let arrPG = f1(GETParamsObj, paginObj, value);
                 paginObj = arrPG[0];
@@ -340,7 +368,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 switchVeg.addEventListener("click", () => {
                     vegBool = !vegBool;
-                    console.log(vegBool);
+                    if (vegBool) {
+                        switchVeg.setAttribute("checked", "");
+                    } else {
+                        switchVeg.removeAttribute("checked");
+                    }
                 });
                 sbmPolBtn.addEventListener("click", () => {
                     let aLineString2 = "";
@@ -371,8 +403,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 for (let j = 0; j < sortSelector.length; j++) {
                     sortSelector[j].addEventListener("click", () => {
-                        console.log("j");
-                        console.log(j);
                         switch (j) {
                             case 0:
                                 sorting = "nameasc";
@@ -399,6 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 srtBtn_0.textContent = "По рейт Убыв";
                                 break;
                         }
+
                     })
                 }
             });

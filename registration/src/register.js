@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         //   "phoneNumber": "string"
         // }
         const linkToReg = "https://food-delivery.kreosoft.ru/api/account/register";
-        console.log(JSON.stringify(params));
         const response = await fetch(`${linkToReg}`, {
             headers: {
                 'Accept': 'application/json',
@@ -81,16 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
     submitReg.addEventListener("click", () => {
         user = getDataFromForms();
         if (validAll(user)) {
-            console.log((user));
             let promise = new Promise(function (resolve) {
                 resolve(sendData(user));
             });
             promise.then(function (response) {
-                console.log(response);
                 responseObj = response;
 
                 localStorage.setItem('token', responseObj.token);
                 console.log(localStorage.getItem('token')); // read
+                location.replace("/");
             });
         } else {
             console.log("Unfortune");
