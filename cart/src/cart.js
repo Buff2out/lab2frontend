@@ -73,9 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 resolve(getCart());
             });
             promiseCart.then(function (respCart) {
-                let img = document.querySelectorAll();
+                let mealsImgs = document.querySelectorAll(".dish-image");
                 for (let i = 0; i < respCart.length; i++) {
-
+                    mealsImgs[i].classList.remove("visually-hidden");
+                    mealsImgs[i].src = respCart.image;
                 }
             });
         }

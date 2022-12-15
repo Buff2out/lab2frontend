@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function setPagHtmlVals(menuPage) {
             let cardsH = document.querySelectorAll(".h-100");
             let imgs = document.querySelectorAll(".card-img-top");
+            let addToCartBtn = document.querySelectorAll(".btn-basket");
             let cTitles = document.querySelectorAll(".card-title");
             let mCategories = document.querySelectorAll(".meal-category");
             let mRatings = document.querySelectorAll(".meal-rating");
@@ -95,7 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 cTitles[i].addEventListener("click", () => {
                     gettingMealId(menuPage.dishes[i].id);
-                })
+                });
+                addToCartBtn[i].addEventListener("click", () => {
+                    let promiseAddToCart = new Promise(function (resolve) {
+                        resolve(addToCart(menuPage.dishes[i].id));
+                    });
+                    promiseAddToCart.then(function (value){
+                        console.log(value);
+                    });
+                });
+
             }
         }
 
