@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${tokenForCart}`
             }
         });
@@ -73,10 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 resolve(getCart());
             });
             promiseCart.then(function (respCart) {
+                console.log(respCart);
                 let mealsImgs = document.querySelectorAll(".dish-image");
+                let mealCards = document.querySelectorAll(".meal-card");
                 for (let i = 0; i < respCart.length; i++) {
-                    mealsImgs[i].classList.remove("visually-hidden");
-                    mealsImgs[i].src = respCart.image;
+                    mealCards[i].classList.remove("visually-hidden");
+                    mealsImgs[i].src = respCart[i].image;
+                    console.log(mealsImgs[i].src);
                 }
             });
         }

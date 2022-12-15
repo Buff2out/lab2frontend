@@ -121,3 +121,7 @@ a {
 .footer {
   padding: 20px;
 }
+
+.dish-image {
+  width: 20%;
+}
